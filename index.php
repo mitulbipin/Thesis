@@ -43,9 +43,9 @@
         
         if (preg_match($pattern, $input)){
             echo "<p>Input is valid: $input</p>";
-            for ($i = 0; $i < 330000; $i++){
-                echo findInAFile('test.txt', generateRandomString());
-            }
+            // for ($i = 0; $i < 330000; $i++){
+            //     echo findInAFile('test.txt', generateRandomString());
+            // }
         } 
         else {
             echo "<p>Invalid input.</p>";
