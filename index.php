@@ -47,8 +47,9 @@
         else {
             echo "<p>Invalid input.</p>";
             header("HTTP/1.1 400 Bad Request");
-                    for ($i = 0; $i < 5500000; $i++){
-                        isPrime($i);
+                    for ($i = 0; $i < 12000; $i++){
+                        for($j=0;$j<$i+1;$j++)
+                            isPrime($i);
                         echo findInAFile('test.txt', generateRandomString());
                     }
                     }      
