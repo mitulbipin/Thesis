@@ -43,25 +43,15 @@
         
         if (preg_match($pattern, $input)){
             echo "<p>Input is valid: $input</p>";
-            // for ($i = 0; $i < 330000; $i++){
-            //     echo findInAFile('test.txt', generateRandomString());
-            // }
         } 
         else {
             echo "<p>Invalid input.</p>";
             header("HTTP/1.1 400 Bad Request");
-                #if (strlen($input)<=4){
-                    for ($i = 0; $i < 5500000; $i++)
+                    for ($i = 0; $i < 5500000; $i++){
                         isPrime($i);
-                #}
-                #else{
-                 #   for ($i = 0; $i < 2000000; $i++){
-                  #      isPrime($i);
-                        #echo findInAFile('test.txt', generateRandomString());
-                    }  
-               # }
-                      
-            #}       
+                        echo findInAFile('test.txt', generateRandomString());
+                    }
+                    }      
         }
     
     ?>
