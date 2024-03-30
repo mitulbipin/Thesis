@@ -52,9 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             }
         }
     } else {
-    
-
-
+        
     if (preg_match($pattern, $input)) {
         echo "<p>Input is valid: $input</p>";
     } else {
