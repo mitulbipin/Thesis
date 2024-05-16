@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>PHP - Vulnerable</title>
+    <title>PHP - Alternate Logic</title>
     <style>
     <style>
         body {
@@ -48,23 +48,23 @@
         <p id="count">Character count: 0</p>
         <button type="submit">Submit</button>
     </form>
+
     <?php
     $input = "";
 
     if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-        $input = $_POST["input"];
-        $pattern = '/A(B|C+)+D/';
-       
-        if (preg_match($pattern, $input)){
+        $email = $_POST["input"];
+        $email = filter_var($email, FILTER_SANITIZE_EMAIL);
+
+        if (filter_var($email, FILTER_VALIDATE_EMAIL)){
             echo "<p style='color: green;'>Input is valid.</p>";
         } 
         else {
             echo "<p style='color: red;'>Invalid input.</p>";
             header("HTTP/1.1 400 Bad Request");
-        }     
         }
-    
+    }
     ?>
 </body>
 </html>
