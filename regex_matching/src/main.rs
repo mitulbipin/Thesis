@@ -1,19 +1,52 @@
+extern crate hyper;
 extern crate regex;
+extern crate serde;
+extern crate serde_json;
+extern crate serde_derive;
 
+use hyper::{Body, Request, Response, Server};
+use hyper::service::{make_service_fn, service_fn};
+use hyper::Method;
 use regex::Regex;
-use std::io::{self, Write};
+use serde_derive::Deserialize;
+use std::convert::Infallible;
+use tokio::runtime::Runtime;
+
+#[derive(Deserialize)]
+struct PostRequest {
+    text: String,
+}
+
+async fn handle_request(req: Request<Body>) -> Result<Response<Body>, Infallible> {
+    match (req.method(), req.uri().path()) {
+        (&Method::POST, "/match") => {
+            let whole_body = hyper::body::to_bytes(req.into_body()).await.unwrap();
+            let post_req: PostRequest = serde_json::from_slice(&whole_body).unwrap();
+            let re = Regex::new("A(B|C+)+D").unwrap();
+            let response = match re.is_match(&post_req.text) {
+                true => "Match found",
+                false => "No match found",
+            };
+            Ok(Response::new(Body::from(response)))
+        },
+        _ => {
+            Ok(Response::new(Body::from("Route not found")))
+        },
+    }
+}
 
 fn main() {
-    let re = Regex::new("A(B|C+)+D").unwrap();
+    let rt = Runtime::new().unwrap();
+    rt.block_on(async {
+        let make_svc = make_service_fn(|_conn| {
+            async { Ok::<_, Infallible>(service_fn(handle_request)) }
+        });
 
-    print!("Please enter some text: ");
-    io::stdout().flush().unwrap();  // Flush stdout to display the prompt before read_line
+        let addr = ([0 ,0 ,0 , 0], 3000).into();
+        let server = Server::bind(&addr).serve(make_svc);
 
-    let mut input = String::new();
-    io::stdin().read_line(&mut input).unwrap();
-
-    match re.is_match(&input.trim()) {
-        true => println!("Match found"),
-        false => println!("No match found"),
-    }
+        if let Err(e) = server.await {
+            eprintln!("server error: {}", e);
+        }
+    });
 }
