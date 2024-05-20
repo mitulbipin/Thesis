@@ -1,3 +1,0 @@
-/var/www/html/php-redos/re2_extension/build/CMakeFiles/MyWebServer.dir
-/var/www/html/php-redos/re2_extension/build/CMakeFiles/edit_cache.dir
-/var/www/html/php-redos/re2_extension/build/CMakeFiles/rebuild_cache.dir
