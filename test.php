@@ -1,22 +1,16 @@
 <?php
-// Input string to be matched
 $input = "ACCCCCCCCCCCCCCCCCCCCCCCCCCCCCCX";
-
-// Regular expression pattern
 $pattern = '/A(B|C+)+D/';
 
-// Measure start time
+
 $start = microtime(true);
 
-// Perform the regex match
 $matches = [];
 $result = preg_match($pattern, $input, $matches);
 
-// Measure end time
 $end = microtime(true);
 
-// Calculate matching time
-$matchingTime = ($end - $start) * 1000; // Convert to milliseconds
+$matchingTime = ($end - $start) * 1000;
 
 if ($result === false) {
     echo "Regex matching failed.";
